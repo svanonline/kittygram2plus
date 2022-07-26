@@ -4,6 +4,8 @@ from .models import Achievement, Cat, User
 
 from .permissions import OwnerOrReadOnly, ReadOnly
 
+from rest_framework.throttling import AnonRateThrottle
+
 from .serializers import AchievementSerializer, CatSerializer, UserSerializer
 
 
@@ -11,6 +13,7 @@ class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
+    throttle_scope = 'low_request' 
 
     def get_permissions(self):
     # Если в GET-запросе требуется получить информацию об объекте
